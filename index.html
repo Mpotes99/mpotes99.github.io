@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bloc de Notas</title>
+    <title>Administrador de tareas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="top-bar">
+        <span>Escribí tus tareas y descargalas gratis!</span>
+    </div>
     <header>
-        <h1>Bloc de Notas</h1>
+        <h1>¡Administrá tus tareas de forma facil y rápido!!</h1>
+        <h3>Anotá, organizá y descargá tus tareas en un solo <label for=""></label>lugar</h3>
     </header>
     <main>
-        <form id="noteForm">
-            <label for="noteContent">Nueva Nota:</label>
-            <textarea name="noteContent" id="noteContent" rows="4"></textarea>
-            <button type="submit">Guardar nota</button>
-        </form>
-    </main>
+        <div class="notas">
+            <form id="noteForm">
+                <label for="noteContent">Nueva tarea:</label>
+                <textarea name="noteContent" id="noteContent" rows="4"></textarea>
+                <button type="submit" class="botonsave">Guardar tarea</button>
+            </form>
+        </div>
+    </main> 
+
     <ul id="noteList">
 
     </ul>
-        <button id="downloadButton">Descargar Todas las Notas</button>
-        <button id="deleteAllButton">Borrar Todas las Notas</button>
+    <div class="botones">
+        <button id="downloadButton" class="boton1">Descargá todas las tareas</button>
+        <button id="deleteAllButton" class="boton1">Vaciar</button>
+    </div>
+
 
     <script src="app.js"></script>
 </body>
