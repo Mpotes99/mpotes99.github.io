@@ -203,3 +203,23 @@ li {
 #noteList {
     min-height: 200px;
 }
+#mobileDownloadBanner {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1A1A1A;
+    padding: 10px;
+    text-align: center;
+}
+
+#downloadAppButton {
+    padding: 10px;
+    background-color: #303030;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
