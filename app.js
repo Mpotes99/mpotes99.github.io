@@ -39,18 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteAllNotes();
     });
 
-    const mobileDownloadBanner = document.getElementById('mobileDownloadBanner');
-    const downloadAppButton = document.getElementById('downloadAppButton');
-
-    if (isMobile() && !isAppInstalled()) {
-        mobileDownloadBanner.style.display = 'block';
-
-        downloadAppButton.addEventListener('click', () => {
-            alert('');
-            mobileDownloadBanner.style.display = 'none';
-        });
-    }
-
     function loadNotes() {
         const notes = getNotes();
 
@@ -88,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         notes.push(content);
         localStorage.setItem('notes', JSON.stringify(notes));
     }
-
 
     function getNotes() {
         return JSON.parse(localStorage.getItem('notes')) || [];
@@ -139,13 +126,5 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('notes');
             loadNotes();
         }
-    }
-
-    function isMobile() {
-        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-
-    function isAppInstalled() {
-        return window.matchMedia('(display-mode: standalone)').matches;
     }
 });
