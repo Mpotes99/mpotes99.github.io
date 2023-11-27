@@ -1,14 +1,64 @@
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registrado con éxito:', registration);
-        })
-        .catch(error => {
-            console.error('Error al registrar el Service Worker:', error);
-        });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    const isDesktop = !isIOS && !isAndroid;
+
+    if (isIOS) {
+        showPopupIOS();
+    } else if (isAndroid) {
+        showPopupAndroid();
+    } else {
+        showPopupDesktop();
+    }
+
+    function showPopupIOS() {
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = '✕';
+        closeButton.classList.add('close-button');
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(popup);
+        });
+
+        const message = document.createElement('div');
+        message.classList.add('message');
+
+        const iosButton = document.createElement('button');
+        iosButton.textContent = 'Presiona el botón:';
+        iosButton.classList.add('ios-button');
+        iosButton.addEventListener('click', () => {
+            // Agrega lógica para agregar a la pantalla de inicio en Safari.
+        });
+
+        const iosButtonImage = document.createElement('img');
+        iosButtonImage.src = 'button-ios.png';  // Reemplaza con la ruta de tu imagen.
+        iosButton.appendChild(iosButtonImage);
+
+        const addToHomeButton = document.createElement('button');
+        addToHomeButton.textContent = 'y luego agregar a inicio';
+        addToHomeButton.addEventListener('click', () => {
+            // Agrega lógica para agregar a la pantalla de inicio en Safari.
+        });
+
+        message.appendChild(iosButton);
+        message.appendChild(addToHomeButton);
+
+        popup.appendChild(closeButton);
+        popup.appendChild(message);
+
+        document.body.appendChild(popup);
+    }
+
+    function showPopupAndroid() {
+        // Lógica para mostrar instrucciones para Android.
+    }
+
+    function showPopupDesktop() {
+        // Lógica para mostrar mensaje de instalación en desktop.
+    }
+
     const noteForm = document.getElementById('noteForm');
     const noteContentInput = document.getElementById('noteContent');
     const noteList = document.getElementById('noteList');
@@ -38,18 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteAllButton.addEventListener('click', () => {
         deleteAllNotes();
     });
-
-    const mobileDownloadBanner = document.getElementById('mobileDownloadBanner');
-    const downloadAppButton = document.getElementById('downloadAppButton');
-
-    if (isMobile() && !isAppInstalled()) {
-        mobileDownloadBanner.style.display = 'block';
-
-        downloadAppButton.addEventListener('click', () => {
-            alert('La aplicación se agregará a tu pantalla de inicio.');
-            mobileDownloadBanner.style.display = 'none';
-        });
-    }
 
     function loadNotes() {
         const notes = getNotes();
@@ -138,13 +176,5 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('notes');
             loadNotes();
         }
-    }
-
-    function isMobile() {
-        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-
-    function isAppInstalled() {
-        return window.matchMedia('(display-mode: standalone)').matches;
     }
 });
