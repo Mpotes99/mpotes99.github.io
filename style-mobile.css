@@ -33,7 +33,9 @@ li{
     align-items: center;
     justify-content: center;
 }
-
+.boton1{
+    font-family: Inter;
+}
 .boton1,
 .boton2,
 .botonsave,
@@ -94,6 +96,7 @@ textarea {
     border-bottom: 1px solid #FFFFFF;
     padding: 10px;
     width: 100%;
+    padding-bottom: 0;
 }
 
 .note-item .boton-container {
