@@ -47,22 +47,25 @@ document.addEventListener('DOMContentLoaded', () => {
         notes.forEach((note, index) => {
             const li = document.createElement('li');
             li.textContent = `${index + 1}. ${note}`;
-            li.classList.add('note-item'); 
+            li.classList.add('note-item');
+
+            const botonContainer = document.createElement('div');
+            botonContainer.classList.add('boton-container');
 
             const editButton = document.createElement('button');
             editButton.textContent = 'Editar';
             editButton.addEventListener('click', () => editNote(index));
-            editButton.classList.add('boton-item'); 
-
+            editButton.classList.add('boton-item');
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => deleteNote(index, li)); 
-            deleteButton.classList.add('boton-eliminar'); 
+            deleteButton.addEventListener('click', () => deleteNote(index, li));
+            deleteButton.classList.add('boton-eliminar');
 
+            botonContainer.appendChild(editButton);
+            botonContainer.appendChild(deleteButton);
 
-            li.appendChild(editButton);
-            li.appendChild(deleteButton);
+            li.appendChild(botonContainer);
 
             noteList.appendChild(li);
         });
@@ -121,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (confirmDelete) {
             localStorage.removeItem('notes');
-            loadNotes(); 
+            loadNotes();
         }
     }
 });
