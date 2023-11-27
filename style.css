@@ -10,6 +10,12 @@ body {
     justify-content: center;
     text-align: center;
 }
+.main {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 .top-bar {
     background-color: #F4FF80;
@@ -32,8 +38,22 @@ body {
     border-radius: 5px;
     font-weight: 10;
     font-size: 1rem;
+    cursor: pointer;
 }
-
+.boton2{
+    background-color: #303030; 
+    color: #FFFFFF; 
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 10;
+    font-size: 1rem;
+}
 @keyframes moveText {
     0% {
         transform: translateX(0);
@@ -78,11 +98,79 @@ textarea {
     font-size: 1rem;
 }
 .botonsave{
-    background-color: rgb(255, 255, 255);
-    color: #1A1A1A;
+    background-color: #F4FF80;
+    color:#1A1A1A
+    ;
     padding: 10px;
     border-radius: 8px;
+    cursor: pointer;
+    border: 0;
+
 }
 .notas{
     min-width: 600px;
+}
+.notas-container {
+    display: flex;
+    min-height: 50vh;
+    overflow: auto;
+}
+
+
+.note-item.delete-animation {
+    animation: checklist-delete .5s ease forwards;
+}
+
+@keyframes checklist-delete {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+li{
+    font-size: 1.5rem;
+}
+.boton-item{
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #72ff52; 
+    color: #1A1A1A; 
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.boton-eliminar {
+    background-color: #FF5252; 
+    color: #FFFFFF; 
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-eliminar:hover {
+    background-color: #FF0000; 
+}
+
+.boton-eliminar::before {
+    content: '✕'; 
+    margin-right: 5px; 
+}
+
+.boton-eliminar::before {
+    font-size: 1.2em;
+    line-height: 1;
+}
+li{
+    margin-top: 10px;
+    text-align: justify;
+}
+#noteList{
+    min-height: 200px;
 }

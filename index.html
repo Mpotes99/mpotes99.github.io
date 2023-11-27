@@ -15,21 +15,23 @@
         <h3>Anotá, organizá y descargá tus tareas en un solo <label for=""></label>lugar</h3>
     </header>
     <main>
-        <div class="notas">
-            <form id="noteForm">
-                <label for="noteContent">Nueva tarea:</label>
-                <textarea name="noteContent" id="noteContent" rows="4"></textarea>
-                <button type="submit" class="botonsave">Guardar tarea</button>
-            </form>
+        <div class="notas-container">
+            <div class="notas-form">
+                <form id="noteForm">
+                    <label for="noteContent">Nueva tarea:</label>
+                    <textarea name="noteContent" id="noteContent" rows="4"></textarea>
+                    <button type="submit" class="botonsave">Guardar tarea</button>
+                </form>
+            </div>
+            <div class="notas-list">
+                <ul id="noteList"></ul>
+            </div>
         </div>
     </main> 
 
-    <ul id="noteList">
-
-    </ul>
     <div class="botones">
         <button id="downloadButton" class="boton1">Descargá todas las tareas</button>
-        <button id="deleteAllButton" class="boton1">Vaciar</button>
+        <button id="deleteAllButton" class="boton2">Vaciar</button>
     </div>
 
 

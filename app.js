@@ -47,14 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
         notes.forEach((note, index) => {
             const li = document.createElement('li');
             li.textContent = `${index + 1}. ${note}`;
+            li.classList.add('note-item'); 
 
             const editButton = document.createElement('button');
             editButton.textContent = 'Editar';
             editButton.addEventListener('click', () => editNote(index));
+            editButton.classList.add('boton-item'); 
+
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Eliminar';
-            deleteButton.addEventListener('click', () => deleteNote(index));
+            deleteButton.addEventListener('click', () => deleteNote(index, li)); 
+            deleteButton.classList.add('boton-eliminar'); 
+
 
             li.appendChild(editButton);
             li.appendChild(deleteButton);
@@ -84,11 +89,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function deleteNote(index) {
+    function deleteNote(index, element) {
         const notes = getNotes();
         notes.splice(index, 1);
         localStorage.setItem('notes', JSON.stringify(notes));
-        loadNotes();
+
+        element.classList.add('delete-animation');
+
+        element.addEventListener('animationend', () => {
+            loadNotes();
+        });
     }
 
     function downloadNotes() {
@@ -106,13 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     }
 
-    // Función para borrar todas las notas
     function deleteAllNotes() {
         const confirmDelete = confirm('¿Estás seguro de que deseas borrar todas las notas?');
 
         if (confirmDelete) {
             localStorage.removeItem('notes');
-            loadNotes(); // Actualizar la lista después de borrar
+            loadNotes(); 
         }
     }
 });
