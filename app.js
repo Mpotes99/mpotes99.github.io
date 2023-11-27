@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function editNote(index) {
         const notes = getNotes();
-        const editedNote = prompt('Editar nota:', notes[index]);
+        const editedNote = prompt('Editar tarea:', notes[index]);
 
         if (editedNote !== null) {
             notes[index] = editedNote.trim();
