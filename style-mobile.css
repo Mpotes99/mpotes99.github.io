@@ -89,16 +89,19 @@ textarea {
     overflow: auto;
 }
 
-.note-item {
+note-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-bottom: 1px solid #FFFFFF;
     padding: 10px;
     width: 100%;
-    padding-bottom: 0;
 }
-
+li.note-item{
+    padding: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
 .note-item .boton-container {
     width: 100%;
 }
