@@ -1,6 +1,4 @@
-// Verificación de soporte para Service Worker
 if ('serviceWorker' in navigator) {
-    // Registro del Service Worker
     navigator.serviceWorker.register('/service-worker.js')
         .then(registration => {
             console.log('Service Worker registrado con éxito:', registration);
@@ -14,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const noteForm = document.getElementById('noteForm');
     const noteContentInput = document.getElementById('noteContent');
     const noteList = document.getElementById('noteList');
+    const downloadButton = document.getElementById('downloadButton');
+    const deleteAllButton = document.getElementById('deleteAllButton');
 
-    // Cargar notas almacenadas en localStorage al iniciar la aplicación
     loadNotes();
 
     noteForm.addEventListener('submit', (event) => {
@@ -24,15 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const noteContent = noteContentInput.value.trim();
 
         if (noteContent !== '') {
-            // Guardar la nota en localStorage
             saveNote(noteContent);
 
-            // Actualizar la lista de notas
             loadNotes();
 
-            // Limpiar el formulario
             noteContentInput.value = '';
         }
+    });
+
+    downloadButton.addEventListener('click', () => {
+        downloadNotes();
+    });
+
+    deleteAllButton.addEventListener('click', () => {
+        deleteAllNotes();
     });
 
     function loadNotes() {
@@ -85,5 +89,30 @@ document.addEventListener('DOMContentLoaded', () => {
         notes.splice(index, 1);
         localStorage.setItem('notes', JSON.stringify(notes));
         loadNotes();
+    }
+
+    function downloadNotes() {
+        const notes = getNotes();
+        const notesText = notes.join('\n');
+        const blob = new Blob([notesText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'notas.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Función para borrar todas las notas
+    function deleteAllNotes() {
+        const confirmDelete = confirm('¿Estás seguro de que deseas borrar todas las notas?');
+
+        if (confirmDelete) {
+            localStorage.removeItem('notes');
+            loadNotes(); // Actualizar la lista después de borrar
+        }
     }
 });
