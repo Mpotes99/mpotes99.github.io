@@ -29,17 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
         iosButton.textContent = 'Presiona el botón:';
         iosButton.classList.add('ios-button');
         iosButton.addEventListener('click', () => {
-            // Agrega lógica para agregar a la pantalla de inicio en Safari.
         });
 
         const iosButtonImage = document.createElement('img');
-        iosButtonImage.src = 'button-ios.png';  // Reemplaza con la ruta de tu imagen.
+        iosButtonImage.src = '/img/share.png';  
         iosButton.appendChild(iosButtonImage);
 
         const addToHomeButton = document.createElement('button');
         addToHomeButton.textContent = 'y luego agregar a inicio';
         addToHomeButton.addEventListener('click', () => {
-            // Agrega lógica para agregar a la pantalla de inicio en Safari.
         });
 
         message.appendChild(iosButton);
@@ -52,11 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showPopupAndroid() {
-        // Lógica para mostrar instrucciones para Android.
     }
 
     function showPopupDesktop() {
-        // Lógica para mostrar mensaje de instalación en desktop.
     }
 
     const noteForm = document.getElementById('noteForm');
