@@ -1,3 +1,5 @@
+// app.js
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
         .then(registration => {
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadNotes();
 
-    noteForm.addEventListener('submit', (event) => {
+    noteForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const noteContent = noteContentInput.value.trim();
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (noteContent !== '') {
             saveNote(noteContent);
 
-            loadNotes();
+            await loadNotes();
 
             noteContentInput.value = '';
         }
@@ -39,9 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteAllNotes();
     });
 
-    function loadNotes() {
-        const notes = getNotes();
+    // Consumo de datos con fetch (GET) desde WorldTimeAPI para obtener la hora en Argentina
+    fetch('http://worldtimeapi.org/api/timezone/America/Argentina/Buenos_Aires')
+    .then(response => response.json())
+    .then(data => {
+        console.log('Hora actual en Argentina:', data.datetime);
 
+        const argentinaTime = new Date(data.utc_datetime);
+        const formattedTime = argentinaTime.toLocaleTimeString();
+
+        const horaArgentinaDiv = document.getElementById('horaArgentina');
+        horaArgentinaDiv.textContent = `Hora actual en Argentina: ${formattedTime}`;
+    })
+    .catch(error => console.error('Error en la solicitud GET:', error));
+
+    async function loadNotes() {
+        const notes = getNotes();
         noteList.innerHTML = '';
 
         notes.forEach((note, index) => {
@@ -69,6 +84,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             noteList.appendChild(li);
         });
+    }
+
+    async function downloadNotes() {
+        const notes = getNotes();
+        const notesText = notes.join('\n');
+        const blob = new Blob([notesText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'notas.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function deleteAllNotes() {
+        const confirmDelete = confirm('¿Estás seguro de que deseas borrar todas las notas?');
+
+        if (confirmDelete) {
+            localStorage.removeItem('notes');
+            loadNotes();
+        }
     }
 
     function saveNote(content) {
@@ -102,29 +141,5 @@ document.addEventListener('DOMContentLoaded', () => {
         element.addEventListener('animationend', () => {
             loadNotes();
         });
-    }
-
-    function downloadNotes() {
-        const notes = getNotes();
-        const notesText = notes.join('\n');
-        const blob = new Blob([notesText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'notas.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-    function deleteAllNotes() {
-        const confirmDelete = confirm('¿Estás seguro de que deseas borrar todas las notas?');
-
-        if (confirmDelete) {
-            localStorage.removeItem('notes');
-            loadNotes();
-        }
     }
 });
