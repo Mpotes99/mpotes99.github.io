@@ -13,6 +13,7 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
     const noteForm = document.getElementById('noteForm');
     const noteContentInput = document.getElementById('noteContent');
+    const noteContentError = document.getElementById('noteContentError');
     const noteList = document.getElementById('noteList');
     const downloadButton = document.getElementById('downloadButton');
     const deleteAllButton = document.getElementById('deleteAllButton');
@@ -24,13 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const noteContent = noteContentInput.value.trim();
 
-        if (noteContent !== '') {
-            saveNote(noteContent);
-
-            await loadNotes();
-
-            noteContentInput.value = '';
+        if (noteContent.length <= 4) {
+            noteContentError.textContent = 'La tarea debe tener más de 4 caracteres.';
+            return;
+        } else {
+            noteContentError.textContent = ''; 
         }
+
+        saveNote(noteContent);
+        await loadNotes();
+        noteContentInput.value = '';
     });
 
     downloadButton.addEventListener('click', () => {
@@ -41,19 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteAllNotes();
     });
 
-    // Consumo de datos con fetch (GET) desde WorldTimeAPI para obtener la hora en Argentina
     fetch('http://worldtimeapi.org/api/timezone/America/Argentina/Buenos_Aires')
-    .then(response => response.json())
-    .then(data => {
-        console.log('Hora actual en Argentina:', data.datetime);
+        .then(response => response.json())
+        .then(data => {
+            console.log('Hora actual en Argentina:', data.datetime);
 
-        const argentinaTime = new Date(data.utc_datetime);
-        const formattedTime = argentinaTime.toLocaleTimeString();
+            const argentinaTime = new Date(data.utc_datetime);
+            const formattedTime = argentinaTime.toLocaleTimeString();
 
-        const horaArgentinaDiv = document.getElementById('horaArgentina');
-        horaArgentinaDiv.textContent = `Hora actual en Argentina: ${formattedTime}`;
-    })
-    .catch(error => console.error('Error en la solicitud GET:', error));
+            const horaArgentinaDiv = document.getElementById('horaArgentina');
+            horaArgentinaDiv.textContent = `Hora actual en Argentina: ${formattedTime}`;
+        })
+        .catch(error => console.error('Error en la solicitud GET:', error));
 
     async function loadNotes() {
         const notes = getNotes();

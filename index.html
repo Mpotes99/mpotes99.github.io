@@ -32,7 +32,8 @@
             <div class="notas-form">
                 <form id="noteForm">
                     <label for="noteContent">Nueva tarea:</label>
-                    <textarea name="noteContent" id="noteContent" rows="4"></textarea>
+                    <textarea name="noteContent" id="noteContent" rows="4" required></textarea>
+                    <span id="noteContentError" class="error-message"></span>
                     <button type="submit" class="botonsave">Guardar tarea</button>
                 </form>
             </div>
@@ -47,7 +48,7 @@
         <button id="deleteAllButton" class="boton2">Vaciar</button>
     </div>
     <div id="horaArgentina"></div>
-
+    
     <script src="app.js"></script>
 </body>
 
